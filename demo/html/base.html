@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Demo</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="topbar">
+    <div class="container">
+      <h1>Music Recommendation Demo</h1>
+      <nav>
+        {% if current_user %}
+          <a href="{{ url_for('home') }}">Main</a>
+          <a href="{{ url_for('model_clustering_page') }}">Clustering Model</a>
+          <a href="{{ url_for('model_biclustering_page') }}">Bi-Clustering Model</a>
+          <a href="{{ url_for('my_history') }}">My History</a>
+          <a href="{{ url_for('song_search') }}">Search Songs</a>
+          <a href="{{ url_for('user_history') }}">User History</a>
+          <a href="{{ url_for('logout') }}">Logout ({{ current_user }})</a>
+        {% else %}
+          <a href="{{ url_for('login') }}">Login</a>
+        {% endif %}
+        <button id="theme-toggle" type="button" class="theme-toggle" aria-label="Toggle dark and light mode">☀️ Light</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        {% for msg in messages %}
+          <div class="flash">{{ msg }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+  <script>
+    (function () {
+      var savedTheme = localStorage.getItem('theme');
+      var initialTheme = savedTheme === 'light' ? 'light' : 'dark';
+      document.body.setAttribute('data-theme', initialTheme);
+
+      var btn = document.getElementById('theme-toggle');
+      function updateButton(theme) {
+        btn.textContent = theme === 'light' ? '🌙 Dark' : '☀️ Light';
+      }
+
+      if (btn) {
+        updateButton(initialTheme);
+        btn.addEventListener('click', function () {
+          var current = document.body.getAttribute('data-theme') || 'dark';
+          var next = current === 'dark' ? 'light' : 'dark';
+          document.body.setAttribute('data-theme', next);
+          localStorage.setItem('theme', next);
+          updateButton(next);
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

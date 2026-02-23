@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="panel">
+  <h2>K-Means vs Bi-Clustering Crosstab</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          {% for col in crosstab_columns %}<th>{{ col }}</th>{% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in crosstab_rows %}
+        <tr>
+          {% for col in crosstab_columns %}
+          <td>{{ row[col] }}</td>
+          {% endfor %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="panel two-col">
+  <div>
+    <h2>K-Means Cluster Sizes</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Cluster</th><th>Size</th><th>Percentage</th></tr>
+        </thead>
+        <tbody>
+          {% for row in cluster_sizes %}
+          <tr>
+            <td>{{ row.cluster if 'cluster' in row else loop.index0 }}</td>
+            <td>{{ row.size }}</td>
+            <td>{{ row.percentage }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div>
+    <h2>Bi-Cluster Stats</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Bi-Cluster</th><th>Users</th><th>Artists</th><th>Density</th></tr>
+        </thead>
+        <tbody>
+          {% for row in bicluster_stats %}
+          <tr>
+            <td>{{ row.bicluster }}</td>
+            <td>{{ row.n_users }}</td>
+            <td>{{ row.n_artists }}</td>
+            <td>{{ row.density }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+{% endblock %}

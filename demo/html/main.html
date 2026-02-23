@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="panel">
+  <h2>Main Page - Choose Model</h2>
+  <p>Choose one recommendation method to continue.</p>
+  {% if source_userid %}
+  <p><strong>Source user:</strong> {{ source_userid }} | <strong>Behavior group:</strong> {{ behavior_group }}</p>
+  {% else %}
+  <p><strong>Source user:</strong> custom account</p>
+  {% endif %}
+  <p><strong>Saved songs:</strong> {{ committed_count }}</p>
+</section>
+
+<section class="panel">
+  <h3>Choose One of 2 Ways</h3>
+  <div class="two-col">
+    <div class="panel">
+      <h3>Clustering</h3>
+      <a href="{{ url_for('model_clustering_page') }}"><button type="button">Open Clustering</button></a>
+    </div>
+    <div class="panel">
+      <h3>Bi-Clustering</h3>
+      <a href="{{ url_for('model_biclustering_page') }}"><button type="button">Open Bi-Clustering</button></a>
+    </div>
+  </div>
+</section>
+{% endblock %}

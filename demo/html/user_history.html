@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="panel">
+  <h2>User Listening History</h2>
+  <p>Select a user-id to show listened music from history.</p>
+
+  {% if committed_rows is defined and committed_rows %}
+  <h3>Saved Songs (Account History)</h3>
+  <form method="post" action="{{ url_for('remove_history') }}" class="mb-10">
+    <input type="hidden" name="redirect_to" value="my_history">
+    <button type="submit">Remove History</button>
+  </form>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Artist</th>
+          <th>Track</th>
+          <th>Saved At</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in committed_rows %}
+        <tr>
+          <td>{{ row.artist_name }}</td>
+          <td>{{ row.track_name }}</td>
+          <td>{{ row.committed_at }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% endif %}
+
+  {% if not data_available %}
+    <p class="notice">Listening dataset not found. Expected file: dataset/userid-timestamp-artid-artname-traid-traname.tsv</p>
+  {% endif %}
+
+  <form method="get" class="search-form">
+    <label for="userid-select">Choose user-id</label>
+    <select id="userid-select" name="userid" class="select-input">
+      <option value="">Choose user-id...</option>
+      {% for uid in user_ids %}
+      <option value="{{ uid }}" {% if uid == selected_user %}selected{% endif %}>{{ uid }}</option>
+      {% endfor %}
+    </select>
+    <button type="submit">Show History</button>
+  </form>
+
+  {% if selected_user %}
+  <h3>Selected User: {{ selected_user }}</h3>
+  <p><strong>Behavior Group:</strong> {{ selected_behavior_group if selected_behavior_group else 'N/A' }}</p>
+  {% endif %}
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Timestamp</th>
+          <th>Artist</th>
+          <th>Track</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in history_rows %}
+        <tr>
+          <td>{{ row.timestamp }}</td>
+          <td>{{ row.artist_name }}</td>
+          <td>{{ row.track_name }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}

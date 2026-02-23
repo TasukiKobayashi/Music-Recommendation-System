@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="panel auth-panel">
+  <h2>Login</h2>
+  <p>Choose one of the generated accounts (5 from each behavior group) or use your own custom account.</p>
+
+  <form method="post" class="search-form auth-form">
+    <label for="login-account">Account</label>
+    <select id="login-account" name="account_id" class="select-input" required>
+      <option value="">Choose account...</option>
+      {% for account in accounts %}
+      <option value="{{ account.account_id }}" {% if account.account_id == selected_account_id %}selected{% endif %}>{{ account.label }}</option>
+      {% endfor %}
+    </select>
+
+    <label for="custom-name">Custom name (used when “My Custom Account” is selected)</label>
+    <input id="custom-name" name="custom_name" type="text" value="{{ custom_name }}" placeholder="e.g. my_playlist_account">
+
+    <button type="submit">Login</button>
+  </form>
+</section>
+{% endblock %}

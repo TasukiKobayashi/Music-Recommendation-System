@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="panel">
+  <h2>User: {{ user.userid }}</h2>
+  <p><strong>Behavior Group:</strong> {{ user.behavior_group if user.behavior_group else 'N/A' }}</p>
+  <p><strong>K-Means Cluster:</strong> {{ user.kmeans_cluster }}</p>
+  <p><strong>Bi-Cluster:</strong> {{ user.bicluster }}</p>
+</section>
+
+<section class="panel two-col">
+  <div>
+    <h3>Users in same K-Means cluster</h3>
+    <div class="link-list">
+      {% for uid in same_kmeans %}
+      <div><a href="{{ url_for('user_detail', userid=uid) }}">{{ uid }}</a></div>
+      {% endfor %}
+    </div>
+  </div>
+  <div>
+    <h3>Users in same Bi-Cluster</h3>
+    <div class="link-list">
+      {% for uid in same_bicluster %}
+      <div><a href="{{ url_for('user_detail', userid=uid) }}">{{ uid }}</a></div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}
