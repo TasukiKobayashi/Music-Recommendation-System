@@ -1,0 +1,25 @@
+============================================================
+MODEL COMPARISON SUMMARY
+============================================================
+
+K-Means Clustering:
+  n_clusters: 5
+  silhouette_score: 0.1911
+  davies_bouldin_score: 1.1622
+  calinski_harabasz_score: 10.2698
+  cluster_balance: 0.5530
+
+Bi-Clustering:
+  n_user_clusters: 4
+  n_artist_clusters: 4
+  n_biclusters: 4
+  avg_bicluster_density: 0.5895
+  avg_bicluster_size: 71974.7500
+  user_coverage: 1.0000
+  artist_coverage: 1.0000
+  user_cluster_balance: 1.3992
+
+Clustering vs Bi-Clustering Agreement:
+  Adjusted Rand Index: 0.0439
+  Normalized Mutual Info: 0.1959
+============================================================
